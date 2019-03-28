@@ -1,16 +1,17 @@
 import {ADD_TEXT_JSON, DELETE_TEXT_JSON, AUTH_CHECK, AUTH_OK, AUTH_DENEGATE} from './actionTypes'
 
-export const addText = (add_Text) => {
+export const addText = (new_key, add_Text) => {
     return {
         type: ADD_TEXT_JSON,
+        keyToAdd: new_key,
         textToAdd: add_Text
     }
 }
 
-export const deleteText = (delete_Text) => {
+export const deleteText = (delete_key) => {
     return {
         type: DELETE_TEXT_JSON,
-        textToDelete: delete_Text
+        keyToDelete: delete_key
     }
 }
 

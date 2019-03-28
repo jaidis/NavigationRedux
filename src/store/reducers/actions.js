@@ -11,14 +11,32 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         appJson: () => {
-          return (state.appJson = action.textToAdd);
+          /**
+           *  Add new key value to JSON Object
+           */
+          let tempJson = JSON.parse(state.appJson);
+          if (tempJson !== null){
+            tempJson[action.keyToAdd] = action.textToAdd;
+          }
+          else{
+            tempJson = {};
+            tempJson[action.keyToAdd] = action.textToAdd;
+          }
+          return JSON.stringify(tempJson);
         }
       };
     case DELETE_TEXT_JSON:
       return {
         ...state,
         appJson: () => {
-          return (state.appJson = action.textToDelete);
+          /**
+           *  Delete key-value at JSON Object
+           */
+          let tempJson = JSON.parse(state.appJson);
+          if (tempJson !== null){
+            delete tempJson[action.keyToDelete];
+          }
+          return JSON.stringify(tempJson);
         }
       };
     case AUTH_CHECK:
