@@ -57,7 +57,7 @@ class TabFirst extends Component {
             Added values to JSON
         </Icon.Button>
         <Text style={styles.textJson}>
-          {this.state.appJson}
+          {this.props.appJson}
         </Text>
       </View>
     );
@@ -75,6 +75,12 @@ const styles = StyleSheet.create({
   }
 });
 
+const mapStateToProps = state =>{
+  return {
+      appJson: state.mainReducer.appJson
+  }
+}
+
 const mapDispatchToProps = (dispatch, props) => {
   return {
     addKeyValueJSON: (key, value) => dispatch(addText(props.key,props.value))
@@ -82,4 +88,4 @@ const mapDispatchToProps = (dispatch, props) => {
 }
 
 
-export default connect(state => ({appJson: state.appJson})) (TabFirst);
+export default connect(mapStateToProps) (TabFirst);
