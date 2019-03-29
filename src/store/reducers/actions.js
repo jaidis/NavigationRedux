@@ -1,7 +1,33 @@
 import { ADD_TEXT_JSON, DELETE_TEXT_JSON, AUTH_CHECK, AUTH_OK, AUTH_DENEGATE } from "../actions/actionTypes";
 
+const add_text_to_json = (json, key, value) => {
+  /**
+   *  Add new key value to JSON Object
+   */
+  let tempJson = JSON.parse(json);
+  if (tempJson !== null) {
+    tempJson[key] = value;
+  } else {
+    tempJson = {};
+    tempJson[key] = value;
+  }
+  console.log(JSON.stringify(tempJson));
+  return JSON.stringify(tempJson);
+};
+
+const delete_text_to_json = (json, key) => {
+  /**
+   *  Delete key-value at JSON Object
+   */
+  let tempJson = JSON.parse(json);
+  if (tempJson !== null) {
+    delete tempJson[key];
+  }
+  return JSON.stringify(tempJson);
+}
+
 const initialState = {
-  appJson: "",
+  appJson: null,
   auth: false
 };
 
@@ -10,34 +36,12 @@ const reducer = (state = initialState, action) => {
     case ADD_TEXT_JSON:
       return {
         ...state,
-        appJson: () => {
-          /**
-           *  Add new key value to JSON Object
-           */
-          let tempJson = JSON.parse(state.appJson);
-          if (tempJson !== null){
-            tempJson[action.keyToAdd] = action.textToAdd;
-          }
-          else{
-            tempJson = {};
-            tempJson[action.keyToAdd] = action.textToAdd;
-          }
-          return JSON.stringify(tempJson);
-        }
+        appJson: add_text_to_json(state.appJson, action.keyToAdd, action.textToAdd)
       };
     case DELETE_TEXT_JSON:
       return {
         ...state,
-        appJson: () => {
-          /**
-           *  Delete key-value at JSON Object
-           */
-          let tempJson = JSON.parse(state.appJson);
-          if (tempJson !== null){
-            delete tempJson[action.keyToDelete];
-          }
-          return JSON.stringify(tempJson);
-        }
+        appJson: delete_text_to_json(state.appJson, action.keyToDelete)
       };
     case AUTH_CHECK:
       return {

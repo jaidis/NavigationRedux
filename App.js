@@ -12,15 +12,44 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+import TabFirst from './src/screens/TabFirst/TabFirst';
+
+import { createAppContainer, createStackNavigator } from 'react-navigation';
+import { createStore, combineReducers } from 'redux';
+import { Provider, connect } from 'react-redux';
+// Configuration with Redux implemented
+import configureStore from './src/store/configureStore';
+
+// Init the Store configuration
+const store = configureStore();
+
+// Create our stack navigator
+let RootStack = createStackNavigator({
+  TabFirst: TabFirst
+});
+
+// And the app container
+let Navigation = createAppContainer(RootStack);
+
 type Props = {};
+// export default class App extends Component<Props> {
+//   render() {
+//     return (
+//       <View style={styles.container}>
+//         <Icon.Button name="facebook" backgroundColor="#3b5998">
+//           Login with Facebook
+//         </Icon.Button>
+//       </View>
+//     );
+//   }
+// }
+
 export default class App extends Component<Props> {
   render() {
     return (
-      <View style={styles.container}>
-        <Icon.Button name="facebook" backgroundColor="#3b5998">
-          Login with Facebook
-        </Icon.Button>
-      </View>
+      <Provider store={store}>
+        <Navigation />
+      </Provider>
     );
   }
 }
