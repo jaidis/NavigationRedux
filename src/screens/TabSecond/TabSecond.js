@@ -23,6 +23,12 @@ class TabSecond extends Component {
   }
 }
 
+const mapStateToProps = state =>{
+  return {
+      appJson: state.mainReducer.appJson
+  }
+}
+
 const styles = StyleSheet.create({
   buttonStyle: {
     alignItems: "center",
