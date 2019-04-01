@@ -13,6 +13,7 @@ import {Platform, StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import TabFirst from './src/screens/TabFirst/TabFirst';
+import TabSecond from './src/screens/TabSecond/TabSecond';
 
 import { createAppContainer, createStackNavigator } from 'react-navigation';
 import { createStore, combineReducers } from 'redux';
@@ -25,7 +26,8 @@ const store = configureStore();
 
 // Create our stack navigator
 let RootStack = createStackNavigator({
-  TabFirst: TabFirst
+  TabFirst: TabFirst,
+  TabSecond: TabSecond
 });
 
 // And the app container

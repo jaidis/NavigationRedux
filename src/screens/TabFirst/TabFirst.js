@@ -1,22 +1,26 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Platform, TextInput } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import { addText } from '../../store/actions/index';
-import { connect } from 'react-redux';
+import { addText } from "../../store/actions/index";
+import { connect } from "react-redux";
 
 const extension = Platform.select({
   ios: "ios-cloud-upload",
   android: "md-cloud-upload"
 });
 
-class TabFirst extends Component {
+const extension2 = Platform.select({
+  ios: "ios-cloud-download",
+  android: "md-cloud-download"
+});
 
+class TabFirst extends Component {
   static navigationOptions = {
-    title: 'TabFirst',
+    title: "TabFirst"
   };
 
   state = {
-    appJson : "",
+    appJson: "",
     key: "",
     value: ""
   };
@@ -33,10 +37,24 @@ class TabFirst extends Component {
     });
   };
 
-  sampleFunction = () => {
+  f_addKey = () => {
     console.log(this.state.key);
     console.log(this.state.value);
-    this.props.dispatch({type: 'ADD_TEXT_JSON', keyToAdd: this.state.key, textToAdd: this.state.value})
+    this.props.dispatch({
+      type: "ADD_TEXT_JSON",
+      keyToAdd: this.state.key,
+      textToAdd: this.state.value
+    });
+    //this.props.addKeyValueJSON(this.state.key, this.state.value);
+  };
+
+  f_deleteKey = () => {
+    console.log(this.state.key);
+    console.log(this.state.value);
+    this.props.dispatch({
+      type: "DELETE_TEXT_JSON",
+      keyToDelete: this.state.key
+    });
     //this.props.addKeyValueJSON(this.state.key, this.state.value);
   };
 
@@ -53,12 +71,25 @@ class TabFirst extends Component {
           value={this.state.value}
           onChangeText={this.valueChangedHandler}
         />
-        <Icon.Button name={extension} onPress={this.sampleFunction}>
-            Added values to JSON
+        <Icon.Button name={extension} onPress={this.f_addKey}>
+          Added values to JSON
         </Icon.Button>
-        <Text style={styles.textJson}>
-          {this.props.appJson}
-        </Text>
+        <Icon.Button
+          name={extension2}
+          onPress={this.f_deleteKey}
+          backgroundColor="red"
+        >
+          Delete key to JSON
+        </Icon.Button>
+
+        <Icon.Button
+          name="md-fastforward"
+          onPress={() => this.props.navigation.navigate("TabSecond")}
+          backgroundColor="green"
+        >
+          Go to TabSecond
+        </Icon.Button>
+        <Text style={styles.textJson}>{this.props.appJson}</Text>
       </View>
     );
   }
@@ -69,23 +100,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 5
   },
-  textJson:{
-    margin: 20,
-    backgroundColor: "green"
+  textJson: {
+    margin: 20
   }
 });
 
-const mapStateToProps = state =>{
+const mapStateToProps = state => {
   return {
-      appJson: state.mainReducer.appJson
-  }
-}
+    appJson: state.mainReducer.appJson
+  };
+};
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    addKeyValueJSON: (key, value) => dispatch(addText(props.key,props.value))
+    addKeyValueJSON: (key, value) => dispatch(addText(props.key, props.value))
   };
-}
+};
 
-
-export default connect(mapStateToProps) (TabFirst);
+export default connect(mapStateToProps)(TabFirst);
